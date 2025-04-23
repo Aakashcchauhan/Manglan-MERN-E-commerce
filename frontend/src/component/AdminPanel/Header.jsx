@@ -10,10 +10,14 @@ const Header = ({ toggleSidebar }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+  // const userData = localStorage.getItem('user');
+  // const userObj = JSON.parse(userData);
+  // console.log(setUser(userObj));
+  
   useEffect(() => {
     const fetchAdminProfile = async () => {
       if (!user || !user.id) {
+        console.log('No user or user ID available');
         setLoading(false);
         return;
       }
@@ -39,7 +43,7 @@ const Header = ({ toggleSidebar }) => {
       } finally {
         setLoading(false);
       }
-    };
+    }; 
     
     fetchAdminProfile();
   }, [user]);

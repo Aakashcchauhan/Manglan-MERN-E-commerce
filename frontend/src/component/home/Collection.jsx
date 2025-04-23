@@ -7,14 +7,13 @@ export default function Collection() {
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const [visibleItems, setVisibleItems] = useState(8);
     const [loading, setLoading] = useState(true);
  
     useEffect(() => {
       const fetchMenProducts = async () => {
         try {
           setLoading(true);
-          const url = `http://localhost:8080/product/all?page=${page}&category=Luxury&limit=10`;
+          const url = `http://localhost:8080/product/all?page=1&category=Luxury&limit=10`;
           const response = await fetch(url);
           const contentType = response.headers.get("content-type");
  

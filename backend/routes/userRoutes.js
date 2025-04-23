@@ -7,9 +7,9 @@ const { jwtAuthMiddleware } = require('../middlewares/jwtMiddleware');
 router.get('/all', getAllUsers);
 
 // Route to get logged-in user's profile
-router.get('/profile',  getUserProfile);
+router.get('/profile/:id',  getUserProfile);
 
 // Route to update logged-in user's profile
-router.put('/profile', jwtAuthMiddleware, updateUserProfile);
+router.put('/profile/:id', jwtAuthMiddleware, updateUserProfile);
 
 module.exports = router;

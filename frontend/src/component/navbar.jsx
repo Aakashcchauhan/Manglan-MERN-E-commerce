@@ -17,6 +17,13 @@ function Navbar() {
   // Keeping all your existing states and code...
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
+  
+  // Add search functionality states
+  const [searchTerm, setSearchTerm] = useState("");
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [searchDebounceTimer, setSearchDebounceTimer] = useState(null);
   const promoCodes = [
     { code: "SAVE5", discount: "5% off", description: "Save 5% on orders up to ₹500", upTo: 500 },
     { code: "FREESHIP75", discount: "Free Shipping", description: "Get Free Shipping on orders up to ₹750", upTo: 750 },
@@ -42,8 +49,64 @@ function Navbar() {
 
   const navigate = useNavigate();
 
+  // Search functionality
+  const fetchProducts = async (search = "") => {
+    setLoading(true);
+    try {
+      let url = `http://localhost:8080/product/all?&search=${search}&limit=10`;
+      
+      const response = await fetch(url);
+      const contentType = response.headers.get("content-type");
+      if (!response.ok) throw new Error("Failed to fetch products");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await response.json();
+        setProducts(data.products);
+      } else {
+        throw new Error("Invalid JSON response");
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchTerm(query);
+    setNavState({ ...navState, searchQuery: query });
+    
+    // Add debouncing to prevent too many API calls
+    if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+    
+    if (query.trim().length > 1) {
+      // Only search if there are at least 2 characters
+      const timer = setTimeout(() => {
+        fetchProducts(query);
+      }, 300); // 300ms delay
+      setSearchDebounceTimer(timer);
+    } else if (query.trim().length === 0) {
+      // Clear results if search box is empty
+      setProducts([]);
+    }
+  };
+
+  // Handle search submit
+  const handleSearchSubmit = (e) => {
+    if (e.key === 'Enter' || e.type === 'click') {
+      fetchProducts(searchTerm);
+    }
+  };
+
   const toggleNav = (key) => {
     setNavState((prev) => ({ ...prev, [key]: !prev[key] }));
+    // Clear search results when closing search
+    if (key === "isSearch" && navState.isSearch) {
+      setProducts([]);
+      setSearchTerm("");
+      setNavState(prev => ({ ...prev, searchQuery: "" }));
+    }
   };
 
   const uniqueItemCount = useSelector((state) => {
@@ -250,7 +313,7 @@ function Navbar() {
         </div>
       </nav>
 
-      {/* Search Slide NavBar */}
+      {/* Search Slide NavBar - UPDATED WITH SEARCH FUNCTIONALITY */}
       <nav
         className={`absolute w-[80%] lg:w-[30%] h-screen bg-white z-70 text-2xl transition-all duration-500 transform scroll-auto ${
           navState.isSearch ? "left-0" : "-left-full"
@@ -259,22 +322,68 @@ function Navbar() {
         <div className="flex items-center h-20 border-b pl-5">
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
-            className="text-gray-600 text-xl mr-3"
+            className="text-gray-600 text-xl mr-3 cursor-pointer"
+            onClick={handleSearchSubmit}
           />
           <input
-            type="text"
-            placeholder="What are you looking for?"
-            className="outline-none text-[20px] px-5 text-black w-[80%]"
-            value={navState.searchQuery}
-            onChange={(e) =>
-              setNavState({ ...navState, searchQuery: e.target.value })
-            }
+           type="text"
+           placeholder="What are you looking for?"
+           className="outline-none text-[20px] px-5 text-black w-[80%]"
+           value={searchTerm}
+           onChange={handleSearchChange}
+            onKeyPress={handleSearchSubmit}
           />
           <FontAwesomeIcon
             icon={faX}
             className="cursor-pointer text-2xl text-black"
             onClick={() => toggleNav("isSearch")}
           />
+        </div>
+        
+        {/* Search Results */}
+        <div className="p-5 overflow-y-auto max-h-[calc(100vh-80px)]">
+          {loading && <p className="text-center text-lg">Loading...</p>}
+          
+          {error && <p className="text-center text-red-500 text-lg">{error}</p>}
+          
+          {!loading && !error && products.length > 0 && (
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Search Results</h3>
+              <div className="space-y-4">
+                {products.map((product) => (
+                  <Link 
+                    key={product._id} 
+                    to={`/product/${product._id}`}
+                    className="flex items-center p-3 border-b hover:bg-gray-50 transition-colors"
+                    onClick={() => setNavState(prev => ({ ...prev, isSearch: false }))}
+                  >
+                    {product.imageURL && (
+                      <img 
+                        src={product.imageURL} 
+                        alt={product.title} 
+                        className="w-16 h-16 object-cover mr-4"
+                      />
+                    )}
+                    <div>
+                      <h4 className="text-lg font-medium">{product.title}</h4>
+                      <p className="text-sm text-gray-500">{product.category}</p>
+                      <p className="text-sm font-semibold">₹{product.price}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {!loading && !error && searchTerm && products.length === 0 && (
+            <p className="text-center text-lg mt-10">No products found matching "{searchTerm}"</p>
+          )}
+          
+          {!searchTerm && !products.length && (
+            <div className="text-center mt-10">
+              <p className="text-lg">Type what you're looking for and press Enter</p>
+            </div>
+          )}
         </div>
       </nav>
 

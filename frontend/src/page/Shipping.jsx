@@ -13,6 +13,7 @@ export default function CheckoutPage() {
   const [chance, setChance] = useState(1);
   const [promo, setPromo] = useState(null);
   const [message, setMessage] = useState("");
+  const [discountAmount, setDiscountAmount] = useState(0);
 
   const promoCodes = [
     {
@@ -20,32 +21,38 @@ export default function CheckoutPage() {
       discount: "5% off",
       description: "Save 5% on orders up to ₹500",
       upTo: 500,
+      value: 0.05, // 5%
     },
     {
       code: "FREESHIP75",
       discount: "Free Shipping",
       description: "Get Free Shipping on orders up to ₹750",
       upTo: 750,
+      value: "shipping", // Special case for free shipping
     },
     {
       code: "DEAL10",
       discount: "10% off",
       description: "10% discount on orders up to ₹1000",
       upTo: 1000,
+      value: 0.10, // 10%
     },
     {
       code: "SPRING15",
       discount: "15% off",
       description: "Spring offer: 15% off on orders up to ₹1500",
       upTo: 1500,
+      value: 0.15, // 15%
     },
     {
       code: "MEGA20",
       discount: "20% off",
       description: "Huge savings! 20% off on orders up to ₹2000",
       upTo: 2000,
+      value: 0.20, // 20%
     },
   ];
+  
   function applyPromoCode(num) {
     switch (num) {
       case "1":
@@ -58,17 +65,39 @@ export default function CheckoutPage() {
         return promoCodes[3];
       case "5":
         return promoCodes[4];
+      default:
+        return promoCodes[0];
     }
   }
+  
   const handleGetPromoCode = () => {
     if (chance !== 1) {
       setMessage("Congratulations! You already received a PromoCode.");
       return;
     } else {
-      const randomNum = Math.floor(Math.random() * 5 + 1);
+      const randomNum = Math.floor(Math.random() * 5 + 1).toString();
       const newPromo = applyPromoCode(randomNum);
       setPromo(newPromo);
       setChance(0); // Decrease chance to 0
+      
+      // Calculate discount based on the promo code
+      calculateDiscount(newPromo);
+    }
+  };
+
+  const calculateDiscount = (promoCode) => {
+    if (!promoCode) return 0;
+    
+    const subtotalValue = subtotal;
+    
+    if (promoCode.value === "shipping") {
+      setDiscountAmount(shipping);
+      setMessage(`Applied "${promoCode.code}": Free shipping (₹${shipping.toFixed(2)} off)`);
+    } else {
+      // Calculate percentage discount
+      const maxDiscount = Math.min(subtotalValue * promoCode.value, promoCode.upTo);
+      setDiscountAmount(maxDiscount);
+      setMessage(`Applied "${promoCode.code}": ₹${maxDiscount.toFixed(2)} off`);
     }
   };
 
@@ -94,7 +123,9 @@ export default function CheckoutPage() {
   );
   const shipping = 9.99;
   const tax = subtotal * 0.08;
-  const total = subtotal + shipping + tax;
+  
+  // Calculate total with discount applied
+  const total = subtotal + shipping + tax - discountAmount;
 
   const uniqueItemCount = useSelector((state) => {
     const uniqueItems = state.cart.cartItems.filter(
@@ -103,6 +134,7 @@ export default function CheckoutPage() {
     );
     return uniqueItems.length;
   });
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -439,19 +471,29 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex justify-between">
                     <p className="text-gray-600">Tax</p>
-                    <p>Rs :- {tax.toFixed(2)}</p>
+                    <p>Rs :- {discountAmount - tax.toFixed(2)}</p>
                   </div>
+                  
+                  {discountAmount > 0 && (
+                    <div className="flex justify-between text-green-600">
+                      <p>Discount</p>
+                      <p>- Rs :- {discountAmount.toFixed(2)}</p>
+                    </div>
+                  )}
+                  
                   <div className="flex justify-between font-bold pt-2 border-t">
                     <p>Total</p>
                     <p>Rs :- {total.toFixed(2)}</p>
                   </div>
                 </div>
               </div>
-              <div className="p-6 bg-gray-100 rounded-lg shadow-md max-w-md mx-auto">
+              <div className="p-6 bg-gray-100 rounded-lg shadow-md max-w-md mx-auto mb-4">
                 <h2 className="text-xl font-bold mb-4">Promo Code Generator</h2>
 
                 <button
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md flex items-center justify-center w-full mb-4"
+                  className={`${
+                    chance === 1 ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-400"
+                  } text-white px-6 py-2 rounded-md flex items-center justify-center w-full mb-4`}
                   onClick={handleGetPromoCode}
                   disabled={chance !== 1}
                 >
@@ -460,19 +502,6 @@ export default function CheckoutPage() {
 
                 {message && (
                   <p className="text-green-600 font-medium">{message}</p>
-                )}
-
-                {promo && (
-                  <div className="mt-4 p-4 border border-gray-300 rounded-md bg-white">
-                    <h3 className="font-bold text-lg">{promo.code}</h3>
-                    <p className="text-blue-600 font-medium">
-                      {promo.discount}
-                    </p>
-                    <p className="text-gray-600 text-sm">{promo.description}</p>
-                    <p className="text-xs text-gray-500 mt-2">
-                      Valid for orders up to ₹{promo.upTo}
-                    </p>
-                  </div>
                 )}
               </div>
               <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">

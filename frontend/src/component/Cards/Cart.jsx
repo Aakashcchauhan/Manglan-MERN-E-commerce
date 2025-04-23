@@ -10,7 +10,7 @@ const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalPrice = useSelector((state) =>
     state.cart.cartItems.reduce(
-      (acc, item) => acc + Math.trunc(item.price * 20),
+      (acc, item) => acc + Math.trunc(item.price),
       0
     )
   );

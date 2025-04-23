@@ -9,7 +9,7 @@ import { ShoppingCart, Eye } from "lucide-react";
  * ShoppingCard component displays a product card with image, details, 
  * and interaction options like add to cart and view details
  * 
- * @param {Object} item - The product item data
+ * - The product item data
  * @param {number} index - The index of the item in the list
  */
 const ShoppingCard = ({ item, index }) => {
@@ -31,7 +31,7 @@ const ShoppingCard = ({ item, index }) => {
   };
 
   const navigateToDetails = () => {
-    navigate(`/shopcategory/category=${item.category}/${item._id || item.id}`, {
+    navigate(`/shopcategory/category=${item.category}/product?${item._id || item.id}`, {
       state: {
         name: item.name,
         desc: item.description,

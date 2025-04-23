@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BarChart, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Bar, ResponsiveContainer } from 'recharts';
 import { Package, ShoppingBag, DollarSign, Users } from 'lucide-react';
 
@@ -52,6 +52,7 @@ const DashboardPage = () => {
       color: 'bg-orange-500' 
     }
   ];
+
 
   return (
     <div className="space-y-6 p-4 sm:p-6 lg:p-8">
