@@ -1,5 +1,6 @@
 const User = require('../models/UserSchema');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
+
 const { generateToken } = require('../utils/jwtUtils');
 
 exports.loginUser = async (req, res) => {
