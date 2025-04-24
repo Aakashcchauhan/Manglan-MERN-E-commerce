@@ -18,7 +18,7 @@ const ProductsPage = () => {
   const fetchProducts = async (page = 1, search = "", category = "") => {
     setLoading(true);
     try {
-      let url = `https://manglan-clothing-backend.onrender.com/product/all?page=${page}&limit=10`;
+      let url = `http://localhost:8080/product/all?page=${page}&limit=10`;
       if (search) url += `&search=${search}`;
       if (category) url += `&category=${category}`;
 
@@ -45,7 +45,7 @@ const ProductsPage = () => {
     try {
       // Replace fetch with axios for POST
       const response = await axios.post(
-        "https://manglan-clothing-backend.onrender.com/product/add", 
+        "http://localhost:8080/product/add", 
         formData, 
         {
           headers: {
@@ -68,7 +68,7 @@ const ProductsPage = () => {
   const fetchProductById = async (productId) => {
     try {
       // Replace fetch with axios
-      const response = await axios.get(`https://manglan-clothing-backend.onrender.com/product/${productId}`);
+      const response = await axios.get(`http://localhost:8080/product/${productId}`);
       return response.data;
     } catch (err) {
       console.error("Error fetching product:", err);
@@ -83,7 +83,7 @@ const ProductsPage = () => {
       
       // Replace fetch with axios for PUT
       const response = await axios.put(
-        `https://manglan-clothing-backend.onrender.com/product/update/${productId}`,
+        `http://localhost:8080/product/update/${productId}`,
         formData,
         {
           headers: {
@@ -108,7 +108,7 @@ const ProductsPage = () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
         // Replace fetch with axios for DELETE
-        await axios.delete(`https://manglan-clothing-backend.onrender.com/product/delete/${productId}`);
+        await axios.delete(`http://localhost:8080/product/delete/${productId}`);
 
         // Refresh product list
         fetchProducts(currentPage, searchTerm, selectedCategory);

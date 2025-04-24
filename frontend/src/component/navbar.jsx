@@ -55,7 +55,7 @@ function Navbar() {
   const fetchProducts = async (search = "") => {
     setLoading(true);
     try {
-      let url = `https://manglan-clothing-backend.onrender.com/product/all?&search=${search}&limit=10`;
+      let url = `http://localhost:8080/product/all?&search=${search}&limit=10`;
       
       const response = await axios.get(url);
       // Axios automatically parses JSON and checks content type

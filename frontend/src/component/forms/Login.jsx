@@ -40,7 +40,7 @@ export default function LoginPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post("https://manglan-clothing-backend.onrender.com/auth/login", {
+      const response = await axios.post("https://localhost:8080/auth/login", {
         email,
         password
       });
