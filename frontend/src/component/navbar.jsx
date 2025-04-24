@@ -262,7 +262,20 @@ function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        <div className="mt-6">
+       <nav 
+        className={`fixed w-[80%] h-screen bg-white overflow-y-auto max-h-[calc(100vh)] 
+        p-10 z-70 text-2xl transition-all duration-500 transform scroll-auto  ${
+          navState.isOpen ? "left-0" : "-left-full"
+        }`}
+        style={{
+          '--scrollbar-width': '8px',
+          '--scrollbar-track': 'transparent',
+          '--scrollbar-thumb': 'rgba(0, 0, 0, 0.2)',
+          '--scrollbar-thumb-hover': 'rgba(0, 0, 0, 0.3)',
+          scrollbarWidth: 'thin',
+          scrollbarColor: 'var(--scrollbar-thumb) var(--scrollbar-track)',
+        }} 
+      >
           {menuItems.map((item, index) => (
             <div key={index} className="mb-6 ">
               <div
@@ -362,7 +375,7 @@ function Navbar() {
                       />
                     )}
                     <div>
-                      <h4 className="text-lg font-medium">{product.title}</h4>
+                      <h4 className="text-lg font-medium">{product.name}</h4>
                       <p className="text-sm text-gray-500">{product.category}</p>
                       <p className="text-sm font-semibold">₹{product.price}</p>
                     </div>
