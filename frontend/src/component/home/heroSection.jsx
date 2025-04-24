@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import banner1 from "../../assets/banner2.jpg";
+import banner1 from "../../assets/Banner2.jpg";
 import banner2 from "../../assets/banner1.jpg";
 // This is just a demo component - in a real implementation you would import your actual images
 const HeroSection = () => {
