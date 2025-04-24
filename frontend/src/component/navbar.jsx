@@ -355,29 +355,39 @@ function Navbar() {
           {!loading && !error && products.length > 0 && (
             <div>
               <h3 className="text-xl font-semibold mb-4">Search Results</h3>
-              <div className="space-y-4">
-                {products.map((product) => (
-                  <Link 
-                    key={product._id} 
-                    to={`/shopcategory/category=${product.category}/product?${product._id}`}
-                    className="flex items-center p-3 border-b hover:bg-gray-50 transition-colors"
-                    onClick={() => setNavState(prev => ({ ...prev, isSearch: false }))}
-                  >
-                    {product.image && (
-                      <img 
-                        src={product.image} 
-                        alt={product.title} 
-                        className="w-16 h-16 object-cover mr-4"
-                      />
-                    )}
-                    <div>
-                      <h4 className="text-lg font-medium">{product.name}</h4>
-                      <p className="text-sm text-gray-500">{product.category}</p>
-                      <p className="text-sm font-semibold">₹{product.price}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+             <div
+      key={product._id || product.id}
+      className="flex items-center p-3 border-b hover:bg-gray-50 transition-colors cursor-pointer"
+      onClick={() => {
+        setNavState(prev => ({ ...prev, isSearch: false }));
+        navigate(`/shopcategory/category=${product.category}/product?${product._id || product.id}`, {
+          state: {
+            name: product.name,
+            desc: product.description,
+            cost: product.price,
+            sizes: product.sizes,
+            colors: product.colors,
+            category: product.category,
+            stock: product.stock,
+            image: product.image,
+            rating: product.rating
+          },
+        });
+      }}
+    >
+      {product.image && (
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-16 h-16 object-cover mr-4"
+        />
+      )}
+      <div>
+        <h4 className="text-lg font-medium">{product.name}</h4>
+        <p className="text-sm text-gray-500">{product.category}</p>
+        <p className="text-sm font-semibold">₹{product.price}</p>
+      </div>
+    </div>
             </div>
           )}
           
