@@ -57,7 +57,7 @@ const Carousel = () => {
   }, [currentIndex, extendedItems.length]);
 
   return (
-    <div className="w-full h-[30rem] overflow-hidden relative">
+   <div className="w-full h-full md:h-[50rem] overflow-hidden relative ">
       {/* Image Container - Moves smoothly */}
       <div
         ref={sliderRef}
