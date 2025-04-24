@@ -39,7 +39,7 @@ const Man = () => {
           ) : products.length === 0 ? (
             <p>No products found</p>
           ) : (
-            <div className="grid grid-cols-2 px-6 pt-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-10 gap-x-16 place-items-center">
+               <div className="grid grid-cols-1 px-6 pt-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-10 gap-x-16 place-items-center">
               {products.slice(0,8).map((item, index) => (
                 <ShopingCard key={index} item={item} index={index} />
               ))}
