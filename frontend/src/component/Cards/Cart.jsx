@@ -47,9 +47,9 @@ const Cart = () => {
         </div>
       ) : (
         <div className="flex flex-col flex-grow overflow-y-auto p-4">
-          {cartItems.map((item) => (
+          {cartItems.map((item,index) => (
             <div 
-              key={item._id} 
+              key={item._id || index} 
               className="w-full bg-white border border-gray-100 mb-3  rounded-lg flex items-center gap-4 p-4 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="bg-gray-100 p-2 rounded-lg">
