@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+
 import {
   faPlus,
   faMinus,
@@ -55,17 +57,12 @@ function Navbar() {
     try {
       let url = `http://localhost:8080/product/all?&search=${search}&limit=10`;
       
-      const response = await fetch(url);
-      const contentType = response.headers.get("content-type");
-      if (!response.ok) throw new Error("Failed to fetch products");
-      if (contentType && contentType.includes("application/json")) {
-        const data = await response.json();
-        setProducts(data.products);
-      } else {
-        throw new Error("Invalid JSON response");
-      }
+      const response = await axios.get(url);
+      // Axios automatically parses JSON and checks content type
+      setProducts(response.data.products);
     } catch (err) {
-      setError(err.message);
+      // Get specific error message from server if available
+      setError(err.response?.data?.message || err.message);
     } finally {
       setLoading(false);
     }
