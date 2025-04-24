@@ -25,7 +25,7 @@ const Header = ({ toggleSidebar }) => {
       try {
         const token = localStorage.getItem('authToken');
         
-        const response = await fetch(`http://localhost:8080/user/profile/${user.id}`, {
+        const response = await fetch(`http://localhost:8080https://manglan-clothing-backend.onrender.com/user/profile/${user.id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
