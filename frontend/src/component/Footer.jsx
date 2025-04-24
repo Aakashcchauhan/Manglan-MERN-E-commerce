@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="flex flex-wrap justify-between">
           {/* Company section */}
           <div className="w-full md:w-1/4 mb-8">
-            <h2 className="text-2xl font-bold mb-4">Mangl</h2>
+            <h2 className="text-2xl font-bold mb-4">Manglan</h2>
             <p className="mb-4 text-gray-400 pr-4">
               Your premier destination for quality fashion and accessories for the entire family.
             </p>
@@ -115,7 +115,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-gray-700 pt-6 mt-6 text-center">
           <p className="text-sm text-gray-400">
-            © {currentYear} Mangl. All rights reserved.
+            © {currentYear} Manglan. All rights reserved.
           </p>
           <p className="text-xs text-gray-500 mt-2">
             All trademarks and registered trademarks are the property of their respective owners.
