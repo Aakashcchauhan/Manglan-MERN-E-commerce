@@ -7,7 +7,7 @@ import {
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../redux/action";
+import { addToCart , deletes} from "../../redux/action";
 import { useNavigate } from "react-router-dom";
 
 const ProductPage = ({
@@ -22,6 +22,10 @@ const ProductPage = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isInCart, setIsInCart] = useState(false);
+  
+
+
   // Get Tailwind color class based on color name
   function getColorClass(colorName) {
     const colorMap = {
@@ -161,7 +165,12 @@ const ProductPage = ({
       // Ensure image is properly included for the cart
       image: product.image,
     };
-
+  if (isInCart) {
+      dispatch(deletes(itemToAdd));
+    } else {
+      dispatch(addToCart(itemToAdd));
+    }
+    setIsInCart(!isInCart);
     console.log("Adding item to cart:", itemToAdd);
     dispatch(addToCart(itemToAdd));
   };
@@ -176,7 +185,7 @@ const ProductPage = ({
           </a>
           <span className="mx-2">/</span>
           <a href="/" className="hover:text-gray-900">
-            Clothing
+            Category
           </a>
           <span className="mx-2">/</span>
           <span className="text-gray-900">{product.name}</span>
@@ -342,13 +351,25 @@ const ProductPage = ({
                 <div className="flex flex-col flex-1 gap-4">
                   {/* Add to Cart */}
                   <button
+                    onClick={handleAddToCart}
+                    className={classNames(
+                      "w-full px-4 py-2 rounded text-sm font-medium transition-colors duration-200 flex items-center justify-center",
+                      isInCart
+                        ? "bg-red-50 text-red-600 hover:bg-red-100 border border-red-200"
+                        : "bg-indigo-600 text-white hover:bg-indigo-700"
+                    )}
+                  >
+                    <ShoppingCartIcon className="w-4 h-4 mr-2" />
+                    {isInCart ? "Remove from Cart" : "Add to Cart"}
+                  </button>
+                  {/* <button
                     type="button"
                     className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     onClick={handleAddToCart}
                   >
                     <ShoppingCartIcon className="h-5 w-5 mr-2" />
                     Add to Cart
-                  </button>
+                  </button> */}
 
                   {/* Buy */}
                   <button
