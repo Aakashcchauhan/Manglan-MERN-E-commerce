@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [ 
     tailwindcss(),
     react()],
+    
     fontFamily: {
       boldonse: ["Boldonse", "system-ui"], // Custom font
     },
