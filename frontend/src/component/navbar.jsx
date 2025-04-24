@@ -354,9 +354,9 @@ function Navbar() {
                     className="flex items-center p-3 border-b hover:bg-gray-50 transition-colors"
                     onClick={() => setNavState(prev => ({ ...prev, isSearch: false }))}
                   >
-                    {product.imageURL && (
+                    {product.image && (
                       <img 
-                        src={product.imageURL} 
+                        src={product.image} 
                         alt={product.title} 
                         className="w-16 h-16 object-cover mr-4"
                       />
