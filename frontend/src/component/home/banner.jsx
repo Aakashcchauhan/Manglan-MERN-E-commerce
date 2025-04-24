@@ -1,7 +1,6 @@
 import React from "react";
 import { ArrowBigRightDash } from "lucide-react";
-  import banner1 from '../../assets/banner1.jpg'
-  import banner2 from '../../assets/banner2.jpg'
+  import banner from '../../assets/banner1.jpg'
 
 const Banner = () => {
   return (
