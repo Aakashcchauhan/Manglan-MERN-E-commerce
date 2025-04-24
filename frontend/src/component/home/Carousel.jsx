@@ -5,7 +5,7 @@ const items = [
   { img: "https://image.hm.com/content/dam/global_campaigns/season_01/women/startpage-assets/wk16/WS21J-16x9-women-startpage-wk16.jpg?imwidth=1024", id: 1 },
   { img: "https://image.hm.com/content/dam/global_campaigns/season_01/men/start-page-assets/w16/start-page/MS21LH9-16x9-Startpage-Teaser-1-Week16.jpg?imwidth=1024", id: 2 },
   { img: "https://image.hm.com/content/dam/global_campaigns/season_01/kids/start-page-assets/w-16/4041E-16x9-kids-start-page-prio-week-16.jpg?imwidth=1920", id: 3 },
-  { img: "http://localhost:5173/src/assets/banner1.jpg", id: 4 },
+  { img: "https://image.hm.com/assets/hm/da/8b/da8bdeaee1c3a128beaf91494fc30461daa834bc.jpg?imwidth=564", id: 4 },
 ];
 
 const Carousel = () => {
