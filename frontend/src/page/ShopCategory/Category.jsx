@@ -19,7 +19,7 @@ const CategoryPage = ({ category, title }) => {
     const fetchCategoryProducts = async () => {
       try {
         setLoading(true);
-        const url = `http://localhost:8080/product/all?page=${page}&category=${category}&limit=10`;
+        const url = `https://manglan-clothing-backend.onrender.com/product/all?page=${page}&category=${category}&limit=10`;
         
         const response = await axios.get(url);
         const data = response.data;
