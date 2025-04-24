@@ -14,7 +14,7 @@ export default function Collection() {
       const fetchMenProducts = async () => {
         try {
           setLoading(true);
-          const url = `http://localhost:8080/product/all?page=1&category=Luxury&limit=10`;
+          const url = `https://manglan-clothing-backend.onrender.com/product/all?page=1&category=Luxury&limit=10`;
           const response = await axios.get(url);
           
           // With axios, we don't need to check content-type or call .json()
