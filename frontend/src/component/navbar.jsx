@@ -247,22 +247,6 @@ function Navbar() {
       {/* Your existing navigation and search code... */}
       {/* Sidebar Navigation (Mobile) */}
       <nav 
-        className={`fixed w-[80%] h-screen bg-white p-10 z-70 text-2xl transition-all duration-500 transform scroll-auto  ${
-          navState.isOpen ? "left-0" : "-left-full"
-        }`}
-      >
-        {/* Your existing code for the mobile sidebar */}
-        {/* Close Button */}
-        <div className="flex justify-end">
-          <FontAwesomeIcon
-            icon={faX}
-            className="cursor-pointer text-3xl text-black"
-            onClick={() => toggleNav("isOpen")}
-          />
-        </div>
-
-        {/* Mobile Menu */}
-       <nav 
         className={`fixed w-[80%] h-screen bg-white overflow-y-auto max-h-[calc(100vh)] 
         p-10 z-70 text-2xl transition-all duration-500 transform scroll-auto  ${
           navState.isOpen ? "left-0" : "-left-full"
@@ -276,6 +260,18 @@ function Navbar() {
           scrollbarColor: 'var(--scrollbar-thumb) var(--scrollbar-track)',
         }} 
       >
+        {/* Your existing code for the mobile sidebar */}
+        {/* Close Button */}
+        <div className="flex justify-end">
+          <FontAwesomeIcon
+            icon={faX}
+            className="cursor-pointer text-3xl text-black"
+            onClick={() => toggleNav("isOpen")}
+          />
+        </div>
+
+        {/* Mobile Menu */}
+      <div className="mt-6 ">
           {menuItems.map((item, index) => (
             <div key={index} className="mb-6 ">
               <div
