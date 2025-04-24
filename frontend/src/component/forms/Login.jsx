@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 import axios from "axios";
 import Loader from "../other/Loader";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
@@ -259,9 +259,9 @@ export default function LoginPage() {
               <div className="mt-8 text-center">
                 <p className="text-sm text-gray-600">
                   Don't have an account?{" "}
-                  <a href="/account/signup" className="font-medium text-blue-600 hover:text-blue-500 transition">
+                 <Link to="/account/signup" className="font-medium text-blue-600 hover:text-blue-500 transition">
                     Sign up
-                  </a>
+                  </Link>
                 </p>
               </div>
             </div>
