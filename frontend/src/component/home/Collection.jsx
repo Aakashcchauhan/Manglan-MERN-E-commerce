@@ -8,7 +8,6 @@ export default function Collection() {
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const [loading, setLoading] = useState(true);
  
     useEffect(() => {
       const fetchMenProducts = async () => {
@@ -70,11 +69,6 @@ export default function Collection() {
   return (
     <>  
       <div className="bg-transparent h-[400px] flex justify-center items-center mt-10">
-        {loading ? (
-          <p>Loading products...</p>
-        ) : error ? (
-          <p>Error: {error}</p>
-        ) : (
           <Slider {...settings} className="w-[90%]">
             {products.map((product, index) => (
               <div key={index} className="px-10">
@@ -82,7 +76,6 @@ export default function Collection() {
               </div>
             ))}
           </Slider>
-        )}
       </div>
     </>
   );
