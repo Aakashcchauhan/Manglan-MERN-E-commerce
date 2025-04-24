@@ -56,6 +56,7 @@ const ShoppingCard = ({ item, index }) => {
         {/* Product Image */}
         <div className="h-64 bg-gray-50 p-4 flex items-center justify-center">
           <img
+              loading="lazy"
             src={item.image}
             alt={item.name}
             className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
