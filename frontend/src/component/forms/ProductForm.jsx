@@ -61,7 +61,7 @@ const ProductForm = ({
         if (initialProduct.image.startsWith('http')) {
           setPreview(initialProduct.image);
         } else {
-          setPreview(`http://localhost:8080${initialProduct.image}`);
+          setPreview(`https://manglan-clothing-backend.onrender.com${initialProduct.image}`);
         }
       }
       
