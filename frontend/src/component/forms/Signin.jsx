@@ -32,7 +32,7 @@ export default function SignupPage() {
     setIsSubmitting(true);
     
     try {
-      const response = await axios.post("http://localhost:8080/auth/signup", {
+      const response = await axios.post("https://manglan-clothing-backend.onrender.com/auth/signup", {
         firstname: firstName,
         lastname: lastName,
         email,
