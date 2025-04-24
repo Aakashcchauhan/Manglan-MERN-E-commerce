@@ -26,7 +26,7 @@ const Banner = () => {
         </div>
 
         <div className="w-full flex flex-col md:flex-row gap-4">
-          <div className="w-full md:w-1/2 h-[98] relative overflow-hidden bg-gray-100">
+          <div className="w-full md:w-1/2 h-98 relative overflow-hidden bg-gray-100">
             <img 
               src="https://image.hm.com/content/dam/global_campaigns/season_01/kids/start-page-assets/w-16/4041E-16x9-kids-start-page-prio-week-16.jpg?imwidth=1920" 
               alt="Left Image" 
@@ -44,7 +44,7 @@ const Banner = () => {
           </div>
          
           {/* Right image */}
-          <div className="w-full md:w-1/2 h-[98] relative overflow-hidden bg-gray-100">
+          <div className="w-full md:w-1/2 h-98 relative overflow-hidden bg-gray-100">
             <img 
               src="https://image.hm.com/content/dam/global_campaigns/season_01/men/start-page-assets/w16/start-page/MS21LH9-16x9-Startpage-Teaser-1-Week16.jpg?imwidth=1024" 
               alt="Right Image" 
