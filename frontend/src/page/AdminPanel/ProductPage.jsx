@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Search, Filter, X } from "lucide-react";
 import ProductForm from "../../component/forms/ProductForm";
+import axios from "axios"; // Import axios
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -21,17 +22,14 @@ const ProductsPage = () => {
       if (search) url += `&search=${search}`;
       if (category) url += `&category=${category}`;
 
-      const response = await fetch(url);
-      const contentType = response.headers.get("content-type");
-      if (!response.ok) throw new Error("Failed to fetch products");
-      if (contentType && contentType.includes("application/json")) {
-        const data = await response.json();
-        setProducts(data.products);
-        setTotalPages(Math.ceil(data.total / 10));
-        setCurrentPage(page);
-      } else {
-        throw new Error("Invalid JSON response");
-      }
+      // Replace fetch with axios
+      const response = await axios.get(url);
+      
+      // Axios automatically parses JSON and checks for errors
+      const data = response.data;
+      setProducts(data.products);
+      setTotalPages(Math.ceil(data.total / 10));
+      setCurrentPage(page);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -45,40 +43,36 @@ const ProductsPage = () => {
 
   const handleAddProduct = async (formData) => {
     try {
-      const response = await fetch("http://localhost:8080/product/add", {
-        method: "POST",
-        body: formData, // FormData for multipart/form-data
-      });
+      // Replace fetch with axios for POST
+      const response = await axios.post(
+        "http://localhost:8080/product/add", 
+        formData, 
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
 
-      if (!response.ok) throw new Error("Failed to add product");
-
-      const data = await response.json();
-      console.log("Product added:", data);
+      console.log("Product added:", response.data);
 
       // Refresh product list
       fetchProducts(currentPage, searchTerm, selectedCategory);
       setShowForm(false);
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.message || err.message);
     }
   };
 
   // Fetch a single product by ID for editing
   const fetchProductById = async (productId) => {
     try {
-      const response = await fetch(
-        `http://localhost:8080/product/${productId}`
-      );
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch product details`);
-      }
-
-      const productData = await response.json();
-      return productData;
+      // Replace fetch with axios
+      const response = await axios.get(`http://localhost:8080/product/${productId}`);
+      return response.data;
     } catch (err) {
       console.error("Error fetching product:", err);
-      setError(err.message);
+      setError(err.response?.data?.message || err.message);
       return null;
     }
   };
@@ -86,20 +80,17 @@ const ProductsPage = () => {
   const handleUpdateProductSubmit = async (formData) => {
     try {
       const productId = currentProduct._id;
-      const response = await fetch(
+      
+      // Replace fetch with axios for PUT
+      const response = await axios.put(
         `http://localhost:8080/product/update/${productId}`,
+        formData,
         {
-          method: "PUT",
-          body: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         }
       );
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to update product: ${errorText}`);
-      }
-
-      // Fixed the variable name from getResponse to response
 
       // Refresh product list
       fetchProducts(currentPage, searchTerm, selectedCategory);
@@ -109,30 +100,21 @@ const ProductsPage = () => {
       setIsEditing(false);
     } catch (err) {
       console.error("Update error:", err);
-      setError(err.message);
+      setError(err.response?.data?.message || err.message);
     }
   };
 
   const handleDeleteProduct = async (productId) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        const response = await fetch(
-          `http://localhost:8080/product/delete/${productId}`,
-          {
-            method: "DELETE",
-          }
-        );
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Failed to delete product: ${productId}`);
-        }
+        // Replace fetch with axios for DELETE
+        await axios.delete(`http://localhost:8080/product/delete/${productId}`);
 
         // Refresh product list
         fetchProducts(currentPage, searchTerm, selectedCategory);
       } catch (err) {
         console.error("Delete error:", err);
-        setError(err.message);
+        setError(err.response?.data?.message || err.message);
       }
     }
   };
@@ -140,7 +122,7 @@ const ProductsPage = () => {
   const handleEditClick = async (productId) => {
     try {
       const productData = await fetchProductById(productId);
-      console.log(productData)
+      console.log(productData);
       if (productData) {
         setCurrentProduct(productData);
         setIsEditing(true);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Mail, User, Lock } from "lucide-react";
 import Loader from "../other/Loader";
@@ -31,25 +32,16 @@ export default function SignupPage() {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch("http://localhost:8080/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstname: firstName,
-          lastname: lastName,
-          email,
-          password,
-          newsletter,
-        }),
+      const response = await axios.post("http://localhost:8080/auth/signup", {
+        firstname: firstName,
+        lastname: lastName,
+        email,
+        password,
+        newsletter,
       });
       
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || "Signup failed");
-      }
+      // With axios, we don't need to parse the response
+      const data = response.data;
       
       localStorage.setItem("authToken", data.token);
       localStorage.setItem("user", JSON.stringify({
@@ -59,7 +51,7 @@ export default function SignupPage() {
       }));
       navigate("/");
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.message || "Signup failed");
     } finally {
       setIsSubmitting(false);
     }

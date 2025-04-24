@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Filter, Download, Eye } from 'lucide-react';
+import axios from 'axios'; // Import axios
 
 const Customer = () => {
   const [customers, setCustomers] = useState([]);
@@ -7,12 +8,8 @@ const Customer = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('http://localhost:8080/user/all');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setCustomers(data);
+        const response = await axios.get('http://localhost:8080/user/all');
+        setCustomers(response.data);
       } catch (error) {
         console.error('Fetch error:', error);
       }
@@ -27,7 +24,8 @@ const Customer = () => {
         return 'bg-green-100 text-green-800';
       case 'admin':
         return 'bg-red-100 text-red-800';
-     
+      default:
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -63,7 +61,7 @@ const Customer = () => {
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
             <tr>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No.</th>
+              <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No.</th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer ID</th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
@@ -73,8 +71,7 @@ const Customer = () => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {customers.map((customer, no) => (
-
-              <tr key={customer._id} className="hover:bg-gray-50 ">
+              <tr key={customer._id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{no+1}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{customer._id}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -82,10 +79,10 @@ const Customer = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.email}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 capitalize">
-                <span className={`px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(customer.role) }`}>
+                  <span className={`px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(customer.role)}`}>
                     {customer.role}
                   </span>
-                  </td>
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button className="text-blue-600 hover:text-blue-900">
                     <Eye size={18} />

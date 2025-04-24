@@ -2,9 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./page/Home/home";
-import Man from "./page/ShopCategory/men";
-import Women from "./page/ShopCategory/women";
-import Kid from "./page/ShopCategory/kid";
+import { MenPage, WomenPage, KidPage } from "./page/ShopCategory/Category";
 import Detailed from "./page/detailed";
 import SignupPage from "./page/Auth/Signup";
 import LoginPage from "./page/Auth/Login";
@@ -20,6 +18,7 @@ import CheckAuth from "./page/CheckAuth/check-auth";
 import NotFound from "./page/ErrorPage/NotFound";
 import UnauthorizedPage from "./page/ErrorPage/UnauthorizedPage";
 import AuthContext from "./context/AuthContext";
+import ShopLayout from "./component/ShopCategory/ShopLayout";
 
 function App() {
   // Authentication state management
@@ -71,7 +70,7 @@ function App() {
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Show loading state while checking auth
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>; // Show loading state while checking auth
   }
 
   return (
@@ -80,11 +79,17 @@ function App() {
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<Home />} />
-          <Route path="/shopcategory/men" element={<Man />} />
-          <Route path="/shopcategory/women" element={<Women />} />
-          <Route path="/shopcategory/kid" element={<Kid />} />
+          
+          {/* Shop Category routes using ShopLayout */}
+          <Route path="/shopcategory" element={<ShopLayout />}>
+            <Route path="men" element={<MenPage />} />
+            <Route path="women" element={<WomenPage />} />
+            <Route path="kid" element={<KidPage />} />
+            <Route path=":category/:title" element={<Detailed />} />
+          </Route>
+          
+          {/* Standalone detail page route */}
           <Route path="/details" element={<Detailed />} />
-          <Route path="/shopcategory/:category/:title" element={<Detailed />} />
          
           {/* Authentication routes */}
           <Route path="/account" element={<Account />}>

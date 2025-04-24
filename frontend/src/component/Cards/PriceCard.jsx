@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const PriceCard = ({ image, cost, name, category, _id, sizes, colors, stock, rating }) => {
+const PriceCard = ({ image, price , name, category, _id, sizes, colors, stock, rating }) => {
   const navigate = useNavigate();
   const productId = _id;
  
@@ -9,7 +9,7 @@ const PriceCard = ({ image, cost, name, category, _id, sizes, colors, stock, rat
     navigate(`/shopcategory/category=${category}/product?${productId}`, {
       state: {
         name,
-        cost,
+        price,
         sizes,
         colors,
         category,
@@ -34,7 +34,7 @@ const PriceCard = ({ image, cost, name, category, _id, sizes, colors, stock, rat
       </div>
       <div className="px-4 py-3 bg-white">
         <h3 className="text-lg font-semibold text-gray-800 truncate">{name}</h3>
-        <p className="text-gray-600 font-medium">Rs. {Math.trunc(cost)}</p>
+        <p className="text-gray-600 font-medium">Rs.{(price)}</p>
       </div>
     </div>
   );

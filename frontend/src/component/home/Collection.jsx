@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Slider from "react-slick";
 import PriceCard from "../../component/Cards/PriceCard";
 
@@ -14,20 +15,14 @@ export default function Collection() {
         try {
           setLoading(true);
           const url = `http://localhost:8080/product/all?page=1&category=Luxury&limit=10`;
-          const response = await fetch(url);
-          const contentType = response.headers.get("content-type");
- 
-          if (!response.ok) throw new Error("Failed to fetch products");
- 
-          if (contentType && contentType.includes("application/json")) {
-            const data = await response.json();
-            setProducts(data.products);
-            setTotalPages(Math.ceil(data.total / 10));
-          } else {
-            throw new Error("Invalid JSON response");
-          }
+          const response = await axios.get(url);
+          
+          // With axios, we don't need to check content-type or call .json()
+          // Data is automatically parsed
+          setProducts(response.data.products);
+          setTotalPages(Math.ceil(response.data.total / 10));
         } catch (err) {
-          setError(err.message);
+          setError(err.response?.data?.message || err.message);
         } finally {
           setLoading(false);
         }
@@ -35,7 +30,7 @@ export default function Collection() {
  
       fetchMenProducts();
     }, [page]); // Added page as dependency
-    
+   
   const settings = {
     dots: true,
     infinite: true,
@@ -71,7 +66,7 @@ export default function Collection() {
       },
     ],
   };
-
+    
   return (
     <>  
       <div className="bg-transparent h-[400px] flex justify-center items-center mt-10">

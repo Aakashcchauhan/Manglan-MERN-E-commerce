@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Loader from "../other/Loader";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 
@@ -39,27 +40,23 @@ export default function LoginPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("http://localhost:8080/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await axios.post("http://localhost:8080/auth/login", {
+        email,
+        password
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        if (data.lockTimeRemaining) {
-          setLockTime(data.lockTimeRemaining);
-        }
-        throw new Error(data.error || "Login failed");
-      }
-      localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("authToken", response.data.token);
       navigate("/");
     } catch (err) {
-      setError(err.message);
+      if (err.response && err.response.data) {
+        if (err.response.data.lockTimeRemaining) {
+          setLockTime(err.response.data.lockTimeRemaining);
+        }
+        setError(err.response.data.error || "Login failed");
+      } else {
+        setError("Login failed. Please try again later.");
+      }
     } finally {
       setIsSubmitting(false);
     }

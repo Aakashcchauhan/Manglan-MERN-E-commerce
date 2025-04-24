@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const ProductForm = ({
   initialProduct = {},
@@ -23,7 +24,7 @@ const ProductForm = ({
 
   const [tags, setTags] = useState(initialProduct?.tags || []);
   const [inputText, setInputText] = useState("");
-  const predefinedTags = ["JavaScript", "React", "Node.js", "CSS", "HTML"];
+  const predefinedTags = ["Men", "Women", "Kid", "Luxruy", "Summer"];
 
   const [message, setMessage] = useState("");
   const [image, setImage] = useState(null);
