@@ -4,7 +4,8 @@ import banner1 from "../../assets/Banner2.jpg";
 import banner2 from "../../assets/banner1.jpg";
 // This is just a demo component - in a real implementation you would import your actual images
 const HeroSection = () => {
-  // For demo purposes, using placeholder images
+
+  // // For demo purposes, using placeholder images
     const images = [banner1, banner2];
   
   const [currentIndex, setCurrentIndex] = useState(0);

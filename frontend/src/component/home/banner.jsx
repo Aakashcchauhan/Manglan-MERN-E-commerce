@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowBigRightDash } from "lucide-react";
   import banner from '../../assets/banner1.jpg'
+
 const Banner = () => {
   return (
     <div className="w-full flex flex-col gap-4 p-4">
