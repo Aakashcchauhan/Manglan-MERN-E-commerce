@@ -14,7 +14,7 @@ const Man = () => {
     const fetchProductsByTag = async (tag) => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:8080/product/tag/${tag}`);
+        const response = await axios.get(`https://manglan-clothing-backend.onrender.com/product/tag/${tag}`);
         // Axios automatically parses JSON, so we just need to access the data property
         setProducts(response.data);
       } catch (err) {
