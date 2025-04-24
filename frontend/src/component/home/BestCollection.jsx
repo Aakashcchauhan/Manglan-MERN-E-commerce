@@ -168,14 +168,14 @@ const ProductPage = ({
 
   return (
     <div className="bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         {/* Breadcrumbs */}
         <nav className="flex mb-6 text-sm font-medium text-gray-500">
-          <a href="#" className="hover:text-gray-900">
+          <a href="/" className="hover:text-gray-900">
             Home
           </a>
           <span className="mx-2">/</span>
-          <a href="#" className="hover:text-gray-900">
+          <a href="/" className="hover:text-gray-900">
             Clothing
           </a>
           <span className="mx-2">/</span>
