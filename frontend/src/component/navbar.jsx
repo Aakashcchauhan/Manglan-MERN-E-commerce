@@ -359,7 +359,7 @@ function Navbar() {
                 {products.map((product) => (
                   <Link 
                     key={product._id} 
-                    to={`/product/${product._id}`}
+                    to={`/shopcategory/category=${product.category}/product?${product._id}`}
                     className="flex items-center p-3 border-b hover:bg-gray-50 transition-colors"
                     onClick={() => setNavState(prev => ({ ...prev, isSearch: false }))}
                   >
