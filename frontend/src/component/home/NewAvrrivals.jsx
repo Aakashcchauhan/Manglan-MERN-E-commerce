@@ -30,7 +30,7 @@ const Man = () => {
   
   return (
     <>
-      <div className="w-full h-auto pb-10 flex flex-col justify-center items-center bg-amber-200">
+      <div className="w-full h-auto pb-10 flex flex-col justify-center items-center">
         <div className="max-w-[2000px] w-full h-auto mx-2">
             <div className="grid grid-cols-1 px-6 pt-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-10 gap-x-16 place-items-center">
               {products.slice(0,8).map((item, index) => (
