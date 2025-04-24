@@ -8,7 +8,7 @@ const Customer = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/user/all');
+        const response = await axios.get('https://manglan-clothing-backend.onrender.com/user/all');
         setCustomers(response.data);
       } catch (error) {
         console.error('Fetch error:', error);
