@@ -53,7 +53,7 @@ const Cart = () => {
               className="w-full bg-white border border-gray-100 mb-3  rounded-lg flex items-center gap-4 p-4 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="bg-gray-100 p-2 rounded-lg">
-                <img src={item.image} alt={item.name} className="w-20 h-20 object-contain rounded-md" />
+                <img loading="lazy" src={item.image} alt={item.name} className="w-20 h-20 object-contain rounded-md" />
               </div>
               
               <div className="flex flex-col flex-grow">
