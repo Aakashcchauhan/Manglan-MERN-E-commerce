@@ -27,25 +27,23 @@ const useWindowDimensions = () => {
 // Loading Card Component
 const LoadingCard = () => {
   return (
-    <div className="rounded-lg shadow-md bg-white p-4 w-full max-w-xs mx-auto">
-      <div className="animate-pulse">
-        {/* Image placeholder */}
-        <div className="bg-gray-300 h-48 rounded-md mb-4"></div>
-        
-        {/* Title placeholder */}
-        <div className="h-4 bg-gray-300 rounded mb-2 w-3/4"></div>
-        
-        {/* Price placeholder */}
-        <div className="h-6 bg-gray-300 rounded mb-4 w-1/2"></div>
-        
-        {/* Description placeholders */}
-        <div className="h-3 bg-gray-200 rounded mb-2"></div>
-        <div className="h-3 bg-gray-200 rounded mb-2 w-5/6"></div>
-        
-        {/* Button placeholder */}
-        <div className="h-10 bg-gray-300 rounded-md mt-4"></div>
+    <div className="w-64 h-96 mx-auto my-6 transition-transform duration-300 hover:scale-105 cursor-pointer rounded-lg overflow-hidden">
+    <div className="w-full h-80 bg-gray-200 overflow-hidden animate-pulse">
+      {/* Loading placeholder for image */}
+      <div className="w-full h-full flex items-center justify-center">
+        <svg className="w-12 h-12 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
       </div>
     </div>
+    <div className="px-4 py-3 bg-white flex flex-col justify-center items-center ">
+      {/* Loading placeholder for name */}
+      <div className="h-6 bg-gray-200 rounded w-full mb-2 animate-pulse"></div>
+      {/* Loading placeholder for price */}
+      <div className="h-5 bg-gray-200 rounded w-1/2 animate-pulse"></div>
+    </div>
+  </div>
   );
 };
 
