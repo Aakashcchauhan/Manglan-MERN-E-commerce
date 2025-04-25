@@ -18,6 +18,7 @@ const ReviewCard = ({ url, title }) => {
         />
       ) : (
         <img
+         loading="lazy"
           src={"https://via.placeholder.com/250x350?text=No+Preview"}
           alt={title}
           className="w-full h-full object-cover"
