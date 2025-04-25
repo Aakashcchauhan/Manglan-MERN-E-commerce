@@ -63,7 +63,7 @@ export default function Collection() {
         try {
           setLoading(true);
          
-          const url = `http://localhost:8080/product/all?&category=Luxury&limit=${limit}`;
+          const url = `https://manglan-clothing-backend.onrender.com/product/all?&category=Luxury&limit=${limit}`;
           const response = await axios.get(url);
          
           setProducts(response.data.products);
