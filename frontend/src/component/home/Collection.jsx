@@ -135,7 +135,7 @@ export default function Collection() {
         </div>
       ) : (
         <div
-          className="bg-transparent flex justify-center items-center mt-10 overflow-hidden "
+          className="bg-transparent flex justify-center items-center mt-10  "
           style={{ height: `${containerHeight}px` }}
         >
           <div className="w-full md:w-[90%] mx-auto">
