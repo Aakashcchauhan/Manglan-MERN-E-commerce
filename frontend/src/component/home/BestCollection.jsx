@@ -196,6 +196,7 @@ const ProductPage = ({
           {/* Product image */}
           <div className="aspect-square rounded-lg bg-gray-100 overflow-hidden">
             <img
+              loading="lazy"
               src={product.images.src}
               alt={product.images.alt}
               className="h-full w-full object-cover object-center cursor-pointer"
