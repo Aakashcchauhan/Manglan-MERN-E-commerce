@@ -8,6 +8,7 @@ const ReviewCard = ({ url, title }) => {
       {/* Media Content */}
       {isVideo ? (
         <video
+          loading="lazy"
           src={url}
           className="w-full h-full object-cover"
           autoPlay
