@@ -5,7 +5,7 @@ import ShopingCard from "../../component/Cards/ShopingCard";
 import Loader from "../../component/other/Loader";
 import Navbar from "../../component/navbar";
 import axios from "axios";
-
+import Banner from '../../component/home/banner'
 // Product Loading Card Component
 const ProductLoadingCard = () => {
   return (
@@ -130,6 +130,7 @@ const CategoryPage = ({ category, title }) => {
   return (
     <>
       <Navbar />
+      <Banner/>
       <Heading heading={`${title} Category`} paragraph={"Fashion '25"} />
       <div className="w-full h-auto pb-10 flex flex-col justify-center items-center">
         <div className="max-w-[1500px] w-full h-auto">
