@@ -16,7 +16,7 @@ const LoadingCard = () => {
           </svg>
         </div>
       </div>
-      <div className="px-4 py-3 bg-white flex flex-col justify-center items-center">
+      <div className="px-4 py-3 bg-white">
         {/* Loading placeholder for name */}
         <div className="h-6 bg-gray-200 rounded w-full mb-2 animate-pulse"></div>
         {/* Loading placeholder for price */}
