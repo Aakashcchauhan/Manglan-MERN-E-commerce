@@ -82,7 +82,7 @@ export default function Review() {
   };
 
   return (
-    <div className="bg-transparent h-[400px] flex justify-center items-center">
+    <div className="bg-transparent h-[400px] flex justify-center items-center overflow-hidden">
       {error ? (
         <p className="text-red-500 text-center">{error}</p>
       ) : reviews.length === 0 ? (
