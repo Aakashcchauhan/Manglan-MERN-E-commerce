@@ -27,6 +27,7 @@ const PriceCard = ({ image, price , name, category, _id, sizes, colors, stock, r
         onClick={handleCardClick}
       >
         <img
+          loading="lazy"
           src={image}
           alt={name}
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
