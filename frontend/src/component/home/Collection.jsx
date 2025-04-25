@@ -120,7 +120,7 @@ export default function Collection() {
     <>  
       {loading ? (
         <div
-          className="bg-transparent flex justify-center items-center mt-10"
+          className="bg-transparent flex justify-center items-center mt-10 overflow-hidden"
           style={{ height: `${containerHeight}px` }}
         >
           <div className="w-full md:w-[90%] mx-auto">
@@ -135,13 +135,13 @@ export default function Collection() {
         </div>
       ) : (
         <div
-          className="bg-transparent flex justify-center items-center mt-10  "
+          className="bg-transparent flex justify-center items-center mt-10 overflow-hidden "
           style={{ height: `${containerHeight}px` }}
         >
           <div className="w-full md:w-[90%] mx-auto">
             <Slider {...settings}>
               {products.map((product, index) => (
-                <div key={index} className="flex justify-center px-24">
+                <div key={index} className="flex justify-center  px-12">
                   <PriceCard {...product} />
                 </div>
               ))}
