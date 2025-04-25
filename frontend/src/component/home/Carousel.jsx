@@ -66,6 +66,7 @@ const Carousel = () => {
       >
         {extendedItems.map((item, index) => (
           <img
+            loading="lazy"
             key={index}
             src={item.img}
             alt={`Slide ${index}`}
