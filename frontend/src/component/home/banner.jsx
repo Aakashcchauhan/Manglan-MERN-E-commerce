@@ -2,7 +2,7 @@ import React from "react";
 import { ArrowBigRightDash } from "lucide-react";
 import banner from '../../assets/banner1.jpg'
 
-const Banner = ({Images}) => {
+const Banner = ({images}) => {
   return (
     <div className="w-full  flex flex-col gap-4 p-4">
       {/* Container for all three images */}
