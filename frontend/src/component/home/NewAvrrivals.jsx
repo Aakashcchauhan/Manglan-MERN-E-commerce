@@ -76,7 +76,7 @@ const Man = () => {
             <div className="grid grid-cols-1 px-6 pt-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-10 gap-x-16 place-items-center">
               {loading ? (
                 // Show loading cards while data is being fetched
-                Array(8).fill(0).map((_, index) => (
+                Array(4).fill(0).map((_, index) => (
                   <ProductLoadingCard key={`loading-${index}`} />
                 ))
               ) : error ? (
