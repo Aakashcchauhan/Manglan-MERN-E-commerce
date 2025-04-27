@@ -74,7 +74,7 @@ export default function Collection() {
     slidesToShow: 4,
     slidesToScroll: 1,
     centerMode: true,
-    centerPadding: "0px", // Changed to 0px to ensure proper centering
+    centerPadding: "30px", // Changed to 0px to ensure proper centering
     focusOnSelect: true,
     className: "center",
     responsive: [
@@ -110,7 +110,7 @@ export default function Collection() {
   const containerHeight = height < 700 ? height * 0.5 : 400;
 
   // Create loading cards array
-  const loadingCards = Array.from({ length: 4 }, (_, index) => (
+  const loadingCards = Array.from({ length: 1 }, (_, index) => (
     <div key={`loading-${index}`} className="flex justify-center px-2">
       <LoadingCard />
     </div>
