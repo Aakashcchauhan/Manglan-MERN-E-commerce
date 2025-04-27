@@ -2,7 +2,7 @@ import React from "react";
 import { ArrowBigRightDash } from "lucide-react";
 import banner from '../../assets/banner1.jpg'
 
-const Banner = ({image1,image2,image3}) => {
+const Banner = ({Images}) => {
   return (
     <div className="w-full  flex flex-col gap-4 p-4">
       {/* Container for all three images */}
@@ -10,7 +10,7 @@ const Banner = ({image1,image2,image3}) => {
         {/* Top banner */}
         <div className="w-full  h-[50%] relative overflow-hidden bg-gray-100">
           <img 
-            src={image1} 
+            src={images[0].url}
             alt="Main Banner" 
             className="w-full h-full object-cover"
           />
@@ -28,7 +28,7 @@ const Banner = ({image1,image2,image3}) => {
         <div className="w-full flex flex-col md:flex-row gap-4">
           <div className="w-full md:w-1/2 h-98 relative overflow-hidden bg-gray-100">
             <img 
-              src={image2} 
+              src={images[1].url}
               alt="Left Image" 
               className="w-full h-full  object-cover hover:scale-105 transition-transform duration-300" 
             />
@@ -46,7 +46,7 @@ const Banner = ({image1,image2,image3}) => {
           {/* Right image */}
           <div className="w-full md:w-1/2 h-98 relative overflow-hidden bg-gray-100">
             <img 
-              src={image3}  
+              src={images[2].url}
               alt="Right Image" 
               className="w-full h-full object-cover  hover:scale-105 transition-transform duration-300" 
             />
