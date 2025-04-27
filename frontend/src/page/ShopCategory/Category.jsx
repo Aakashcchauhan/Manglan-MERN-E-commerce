@@ -7,7 +7,7 @@ import Navbar from "../../component/navbar";
 import axios from "axios";
 import Banner from '../../component/home/banner'
 // Product Loading Card Component
-const ProductLoadingCard = () => {
+const ProductLoadingCard = ({Images}) => {
   return (
     <div className="w-full max-w-sm bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 animate-pulse">
       {/* Product Image Placeholder */}
@@ -130,7 +130,7 @@ const CategoryPage = ({ category, title }) => {
   return (
     <>
       <Navbar />
-      <Banner/>
+      <Banner Images="Images" />
       <Heading heading={`${title} Category`} paragraph={"Fashion '25"} />
       <div className="w-full h-auto pb-10 flex flex-col justify-center items-center">
         <div className="max-w-[1500px] w-full h-auto">
@@ -195,9 +195,66 @@ const CategoryPage = ({ category, title }) => {
   );
 };
 
+const menImages = [
+  {
+    id: 1,
+    url: "https://via.placeholder.com/300x400?text=Image+1"
+  },
+  {
+    id: 2,
+    title: "Image 2",
+    url: "https://image.hm.com/content/dam/global_campaigns/season_01/men/start-page-assets/w16/start-page/MS21LH9-4x5-Startpage-Teaser-1-Week16.jpg?imwidth=768"
+  },
+  {
+    id: 3,
+    title: "Image 3",
+    url: "https://image.hm.com/content/dam/global_campaigns/season_01/men/start-page-assets/w17/MS21LH8-4x5-Startpage-Teaser-3-w17.jpg?imwidth=768"
+  }
+];
+
+
+const womenImages = [
+  {
+    id: 1,
+    url: "https://image.hm.com/content/dam/global_campaigns/season_01/women/startpage-assets/wk17/WS21K-16x9-wk17-option.mp4"
+  },
+  {
+    id: 2,
+    title: "Image 2",
+    url: "https://image.hm.com/content/dam/global_campaigns/season_01/women/startpage-assets/wk17/DS21H-4x5-women-startpage-wk17.jpg?imwidth=768"
+  },
+  {
+    id: 3,
+    title: "Image 3",
+    url: "https://image.hm.com/content/dam/global_campaigns/season_01/women/startpage-assets/wk17/WS21L-4x5-women-startpage-wk17.jpg?imwidth=768"
+  }
+];
+
+
+
+const KidImages = [
+  {
+    id: 1,
+    url: "https://image.hm.com/content/dam/global_campaigns/season_01/kids/start-page-assets/w-17/4081B-16x9-NS-kids-start-page-prio-week-17.jpg?imwidth=1660"
+  },
+  {
+    id: 2,
+    title: "Image 2",
+    url: "https://image.hm.com/content/dam/global_campaigns/season_01/women/startpage-assets/wk17/DS21H-4x5-women-startpage-wk17.jpg?imwidth=768"
+  },
+  {
+    id: 3,
+    title: "Image 3",
+    url: "https://image.hm.com/content/dam/global_campaigns/season_01/kids/start-page-assets/w-17/4081A-4x5-NS-kids-start-page-prio-week-17.jpg?imwidth=768"
+  }
+];
+
+
+
+
 // Individual category pages
-const MenPage = () => <CategoryPage category="Men" title="Men" />;
-const WomenPage = () => <CategoryPage category="Women" title="Women" />;
-const KidPage = () => <CategoryPage category="Kid" title="Kid" />;
+const MenPage = () => <CategoryPage category="Men" title="Men" menImages="Images"  />;
+const WomenPage = () => <CategoryPage category="Women" title="Women" womenImages="Images" />;
+const KidPage = () => <CategoryPage category="Kid" title="Kid" KidImages="Images" />;
 
 export { CategoryPage, MenPage, WomenPage, KidPage };
