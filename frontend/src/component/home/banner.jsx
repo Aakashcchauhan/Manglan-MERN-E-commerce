@@ -1,6 +1,5 @@
 import React from "react";
 import { ArrowBigRightDash } from "lucide-react";
-import banner from '../../assets/banner1.jpg'
 
 const Banner = ({images}) => {
   return (
