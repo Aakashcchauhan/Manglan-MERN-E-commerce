@@ -253,8 +253,8 @@ const KidImages = [
 
 
 // Individual category pages
-const MenPage = () => <CategoryPage category="Men" title="Men" menImages="Images"  />;
-const WomenPage = () => <CategoryPage category="Women" title="Women" womenImages="Images" />;
-const KidPage = () => <CategoryPage category="Kid" title="Kid" KidImages="Images" />;
+const MenPage = () => <CategoryPage category="Men" title="Men" menImages="images"  />;
+const WomenPage = () => <CategoryPage category="Women" title="Women" womenImages="images" />;
+const KidPage = () => <CategoryPage category="Kid" title="Kid" KidImages="images" />;
 
 export { CategoryPage, MenPage, WomenPage, KidPage };
