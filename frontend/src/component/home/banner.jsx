@@ -2,7 +2,7 @@ import React from "react";
 import { ArrowBigRightDash } from "lucide-react";
 import banner from '../../assets/banner1.jpg'
 
-const Banner = () => {
+const Banner = ({image1,image2,image3}) => {
   return (
     <div className="w-full  flex flex-col gap-4 p-4">
       {/* Container for all three images */}
@@ -10,7 +10,7 @@ const Banner = () => {
         {/* Top banner */}
         <div className="w-full  h-[50%] relative overflow-hidden bg-gray-100">
           <img 
-            src={banner} 
+            src={image1} 
             alt="Main Banner" 
             className="w-full h-full object-cover"
           />
@@ -28,7 +28,7 @@ const Banner = () => {
         <div className="w-full flex flex-col md:flex-row gap-4">
           <div className="w-full md:w-1/2 h-98 relative overflow-hidden bg-gray-100">
             <img 
-              src="https://image.hm.com/content/dam/global_campaigns/season_01/kids/start-page-assets/w-16/4041E-16x9-kids-start-page-prio-week-16.jpg?imwidth=1920" 
+              src={image2} 
               alt="Left Image" 
               className="w-full h-full  object-cover hover:scale-105 transition-transform duration-300" 
             />
@@ -46,7 +46,7 @@ const Banner = () => {
           {/* Right image */}
           <div className="w-full md:w-1/2 h-98 relative overflow-hidden bg-gray-100">
             <img 
-              src="https://image.hm.com/content/dam/global_campaigns/season_01/men/start-page-assets/w16/start-page/MS21LH9-16x9-Startpage-Teaser-1-Week16.jpg?imwidth=1024" 
+              src={image3}  
               alt="Right Image" 
               className="w-full h-full object-cover  hover:scale-105 transition-transform duration-300" 
             />
