@@ -49,7 +49,7 @@ const Man = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
-  const ITEMS_PER_PAGE = 8;
+  const ITEMS_PER_PAGE = 4;
   
   const observer = useRef();
   const lastProductElementRef = useCallback(node => {
