@@ -251,12 +251,6 @@ const CategoryPage = ({ category, title, images }) => {
             </div>
           )}
           
-          {/* Message when all products are loaded */}
-          {allProductsLoaded && products.length > 0 && (
-            <div className="text-center text-gray-500 mt-8">
-              <p>No more products to load</p>
-            </div>
-          )}
           
           {/* Show pagination for larger screens */}
           {!loading && totalPages > 1 && !allProductsLoaded && (
