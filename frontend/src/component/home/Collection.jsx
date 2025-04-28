@@ -79,11 +79,11 @@ export default function Collection() {
     className: "center",
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1026,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 4,
           slidesToScroll: 1,
-          initialSlide: 2,
+          initialSlide: 1,
         },
       },
       {
