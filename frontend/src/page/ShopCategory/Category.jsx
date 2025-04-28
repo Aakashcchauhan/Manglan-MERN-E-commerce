@@ -1,8 +1,7 @@
 // src/pages/category/index.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Heading from "../../component/other/Heading";
 import ShopingCard from "../../component/Cards/ShopingCard";
-import Loader from "../../component/other/Loader";
 import Navbar from "../../component/navbar";
 import axios from "axios";
 import Banner from '../../component/home/banner';
@@ -100,58 +99,83 @@ const CategoryPage = ({ category, title, images }) => {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [visibleItems, setVisibleItems] = useState(8);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCategoryProducts = async () => {
-      try {
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [allProductsLoaded, setAllProductsLoaded] = useState(false);
+  const itemsPerPage = 10;
+  
+  // Ref for intersection observer
+  const observer = useRef();
+  const lastProductElementRef = useCallback(node => {
+    if (loading || loadingMore || allProductsLoaded) return;
+    if (observer.current) observer.current.disconnect();
+    
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && page < totalPages) {
+        loadMoreProducts();
+      }
+    }, { threshold: 3 });
+    
+    if (node) observer.current.observe(node);
+  }, [loading, loadingMore, page, totalPages, allProductsLoaded]);
+  
+  const fetchCategoryProducts = async (pageNum, shouldAppend = false) => {
+    try {
+      // Set appropriate loading state
+      if (!shouldAppend) {
         setLoading(true);
-        const url = `https://manglan-clothing-backend.onrender.com/product/all?page=${page}&category=${category}&limit=10`;
-        
-        const response = await axios.get(url);
-        const data = response.data;
-        setProducts(data.products);
-        setTotalPages(Math.ceil(data.total / 10));
-      } catch (err) {
-        setError(err.response?.data?.message || err.message);
-        console.error("Error fetching products:", err);
-      } finally {
-        setLoading(false);
+      } else {
+        setLoadingMore(true);
       }
-    };
-
-    fetchCategoryProducts();
-  }, [page, category]);
-
-  // Implement infinite scroll with debounce
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const fullHeight = document.documentElement.scrollHeight;
       
-      if (scrollTop + windowHeight >= fullHeight - 100) {
-        setVisibleItems((prev) => Math.min(prev + 4, products.length));
+      const url = `https://manglan-clothing-backend.onrender.com/product/all?page=${pageNum}&category=${category}&limit=${itemsPerPage}`;
+      
+      const response = await axios.get(url);
+      const data = response.data;
+      
+      // Calculate total pages
+      const total = Math.ceil(data.total / itemsPerPage);
+      setTotalPages(total);
+      
+      // Check if all products are loaded
+      if (pageNum >= total) {
+        setAllProductsLoaded(true);
       }
-    };
+      
+      // Update products state based on whether we're appending or replacing
+      if (shouldAppend) {
+        setProducts(prev => [...prev, ...data.products]);
+      } else {
+        setProducts(data.products);
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
+      console.error("Error fetching products:", err);
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  };
+  
+  // Load initial products
+  useEffect(() => {
+    // Reset products when category changes
+    setProducts([]);
+    setPage(1);
+    setAllProductsLoaded(false);
     
-    const debounceScroll = () => {
-      let timeout;
-      return () => {
-        clearTimeout(timeout);
-        timeout = setTimeout(handleScroll, 100);
-      };
-    };
-    
-    const debouncedHandleScroll = debounceScroll();
-    window.addEventListener("scroll", debouncedHandleScroll);
-    
-    return () => {
-      window.removeEventListener("scroll", debouncedHandleScroll);
-    };
-  }, [products.length]);
-
+    fetchCategoryProducts(1, false);
+  }, [category]);
+  
+  // Function to load more products
+  const loadMoreProducts = () => {
+    if (page < totalPages && !loadingMore) {
+      const nextPage = page + 1;
+      setPage(nextPage);
+      fetchCategoryProducts(nextPage, true);
+    }
+  };
+  
   // Error handling UI
   if (error) {
     return (
@@ -165,6 +189,7 @@ const CategoryPage = ({ category, title, images }) => {
             onClick={() => {
               setError(null);
               setPage(1);
+              fetchCategoryProducts(1, false);
             }}
           >
             Try Again
@@ -189,53 +214,115 @@ const CategoryPage = ({ category, title, images }) => {
               ))
             ) : (
               // Show actual products once loaded
-              products.slice(0, visibleItems).map((item, index) => (
-                <ShopingCard key={item.id || index} item={item} index={index} />
-              ))
+              products.map((item, index) => {
+                // Apply ref to the last product element for infinite scroll
+                if (products.length === index + 1) {
+                  return (
+                    <div key={item.id || `item-${index}`} ref={lastProductElementRef}>
+                      <ShopingCard item={item} index={index} />
+                    </div>
+                  );
+                }
+                return <ShopingCard key={item.id || `item-${index}`} item={item} index={index} />;
+              })
             )}
           </div>
           
-          {/* Only show pagination and load more when not loading */}
-          {!loading && (
-            <>
-              {/* Pagination controls */}
-              {totalPages > 1 && (
-                <div className="flex justify-center mt-8 pb-4">
-                  <button 
-                    className={`mx-1 px-3 py-1 rounded ${page <= 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white'}`}
-                    onClick={() => setPage(prev => Math.max(prev - 1, 1))}
-                    disabled={page <= 1}
-                  >
-                    Previous
-                  </button>
-                  
-                  <span className="mx-2 py-1">
-                    Page {page} of {totalPages}
-                  </span>
-                  
-                  <button 
-                    className={`mx-1 px-3 py-1 rounded ${page >= totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white'}`}
-                    onClick={() => setPage(prev => Math.min(prev + 1, totalPages))}
-                    disabled={page >= totalPages}
-                  >
-                    Next
-                  </button>
-                </div>
-              )}
-              
-              {/* Show load more button as an alternative to infinite scroll */}
-              {visibleItems < products.length && (
-                <div className="flex justify-center my-8">
-                  <button 
-                    className="px-6 py-2 bg-blue-600 text-white rounded"
-                    onClick={() => setVisibleItems(prev => Math.min(prev + 4, products.length))}
-                  >
-                    Load More
-                  </button>
-                </div>
-              )}
-            </>
+          {/* Loading indicator for more products */}
+          {loadingMore && (
+            <div className="flex justify-center py-6">
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 rounded-full bg-blue-600 animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                <div className="w-3 h-3 rounded-full bg-blue-600 animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                <div className="w-3 h-3 rounded-full bg-blue-600 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+              </div>
+            </div>
           )}
+          
+          {/* Manual load more button as a backup */}
+          {!loading && !loadingMore && !allProductsLoaded && products.length > 0 && (
+            <div className="flex justify-center mt-8">
+              <button 
+                className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200"
+                onClick={loadMoreProducts}
+              >
+                Load More
+              </button>
+            </div>
+          )}
+          
+          {/* Message when all products are loaded */}
+          {allProductsLoaded && products.length > 0 && (
+            <div className="text-center text-gray-500 mt-8">
+              <p>No more products to load</p>
+            </div>
+          )}
+          
+          {/* Show pagination for larger screens */}
+          {!loading && totalPages > 1 && !allProductsLoaded && (
+            <div className="hidden md:flex justify-center mt-8 pb-4">
+              <div className="flex space-x-2">
+                <button 
+                  className={`px-3 py-1 rounded transition duration-200 ${page <= 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                  onClick={() => {
+                    if (page > 1) {
+                      setPage(1);
+                      fetchCategoryProducts(1, false);
+                    }
+                  }}
+                  disabled={page <= 1}
+                >
+                  First
+                </button>
+                
+                <button 
+                  className={`px-3 py-1 rounded transition duration-200 ${page <= 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                  onClick={() => {
+                    if (page > 1) {
+                      const prevPage = page - 1;
+                      setPage(prevPage);
+                      fetchCategoryProducts(prevPage, false);
+                    }
+                  }}
+                  disabled={page <= 1}
+                >
+                  Previous
+                </button>
+                
+                <span className="px-3 py-1">
+                  Page {page} of {totalPages}
+                </span>
+                
+                <button 
+                  className={`px-3 py-1 rounded transition duration-200 ${page >= totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                  onClick={() => {
+                    if (page < totalPages) {
+                      const nextPage = page + 1;
+                      setPage(nextPage);
+                      fetchCategoryProducts(nextPage, false);
+                    }
+                  }}
+                  disabled={page >= totalPages}
+                >
+                  Next
+                </button>
+                
+                <button 
+                  className={`px-3 py-1 rounded transition duration-200 ${page >= totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                  onClick={() => {
+                    if (page < totalPages) {
+                      setPage(totalPages);
+                      fetchCategoryProducts(totalPages, false);
+                    }
+                  }}
+                  disabled={page >= totalPages}
+                >
+                  Last
+                </button>
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
     </>
