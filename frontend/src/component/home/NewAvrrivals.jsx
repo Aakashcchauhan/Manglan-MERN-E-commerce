@@ -145,13 +145,6 @@ const Man = () => {
                   </div>
                 </div>
               )}
-              
-              {/* Message when all products are loaded */}
-              {!hasMore && products.length > 0 && (
-                <div className="col-span-full py-4 text-center text-gray-500">
-                  <p>No more products to load</p>
-                </div>
-              )}
             </div>
         </div>
       </div>
