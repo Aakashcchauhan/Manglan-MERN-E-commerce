@@ -102,7 +102,7 @@ const CategoryPage = ({ category, title, images }) => {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [allProductsLoaded, setAllProductsLoaded] = useState(false);
-  const itemsPerPage = 10;
+  const itemsPerPage = 4;
   
   // Ref for intersection observer
   const observer = useRef();
