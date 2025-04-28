@@ -51,7 +51,7 @@ const ProductLoadingCard = () => {
 const menImages = [
   {
     id: 1,
-    url: "https://via.placeholder.com/300x400?text=Image+1"
+    url: "https://image.hm.com/content/dam/global_campaigns/season_01/men/start-page-assets/w17/MS21LH10-16x9-Startpage-Teaser-1-w17.jpg?imwidth=1660"
   },
   {
     id: 2,
@@ -66,7 +66,7 @@ const menImages = [
 const womenImages = [
   {
     id: 1,
-    url: "https://image.hm.com/content/dam/global_campaigns/season_01/women/startpage-assets/wk17/WS21K-16x9-wk17-option.mp4"
+    url: "https://image.hm.com/content/dam/global_campaigns/season_01/women/startpage-assets/wk17/WS21K-16x9-splash-women-startpage-wk17.jpg?imwidth=1920"
   },
   {
     id: 2,
