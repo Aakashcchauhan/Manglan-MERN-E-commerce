@@ -114,7 +114,7 @@ const CategoryPage = ({ category, title, images }) => {
       if (entries[0].isIntersecting && page < totalPages) {
         loadMoreProducts();
       }
-    }, { threshold: 3 });
+    }, { threshold: 0.5 });
     
     if (node) observer.current.observe(node);
   }, [loading, loadingMore, page, totalPages, allProductsLoaded]);
