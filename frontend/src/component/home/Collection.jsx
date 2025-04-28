@@ -99,7 +99,7 @@ export default function Collection() {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-          centerMode: true,
+          centerMode: false,
           centerPadding: "0px",
         },
       },
