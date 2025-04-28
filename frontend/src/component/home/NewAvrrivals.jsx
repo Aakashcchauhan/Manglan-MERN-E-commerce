@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
-import Heading from "../../component/other/Heading";
 import ShopingCard from "../../component/Cards/ShopingCard";
-import Loader from "../../component/other/Loader";
-import Navbar from "../../component/navbar";
 
 // ProductLoadingCard component defined within the same file
 const ProductLoadingCard = () => {
@@ -13,7 +10,6 @@ const ProductLoadingCard = () => {
       <div className="h-64 bg-gray-200 p-4 flex items-center justify-center">
         <div className="w-3/4 h-3/4 bg-gray-300 rounded"></div>
       </div>
-
       {/* Product Info Placeholder */}
       <div className="p-5">
         {/* Title Placeholder */}
@@ -50,32 +46,73 @@ const Man = () => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const ITEMS_PER_PAGE = 8;
+  
+  const observer = useRef();
+  const lastProductElementRef = useCallback(node => {
+    if (loading || loadingMore) return;
+    if (observer.current) observer.current.disconnect();
+    
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        setPage(prevPage => prevPage + 1);
+      }
+    }, { threshold: 0.5 });
+    
+    if (node) observer.current.observe(node);
+  }, [loading, loadingMore, hasMore]);
+  
+  const fetchProductsByTag = async (tag, pageNum) => {
+    try {
+      const isInitialLoad = pageNum === 1;
+      
+      if (isInitialLoad) {
+        setLoading(true);
+      } else {
+        setLoadingMore(true);
+      }
+      
+      // In a real API, you would pass page and limit params
+      // Here we're simulating pagination with the existing API
+      const response = await axios.get(`https://manglan-clothing-backend.onrender.com/product/tag/${tag}`);
+      
+      // Simulate pagination by slicing the response
+      const allProducts = response.data;
+      const startIndex = 0;
+      const endIndex = pageNum * ITEMS_PER_PAGE;
+      const paginatedProducts = allProducts.slice(startIndex, endIndex);
+      
+      // Check if we've reached the end of available products
+      setHasMore(endIndex < allProducts.length);
+      
+      if (isInitialLoad) {
+        setProducts(paginatedProducts);
+      } else {
+        setProducts(prev => [...prev, ...paginatedProducts.slice((pageNum-1) * ITEMS_PER_PAGE)]);
+      }
+    } catch (err) {
+      console.error("Error fetching products by tag:", err.response?.data?.message || err.message);
+      setError(err.response?.data?.message || err.message);
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  };
   
   useEffect(() => {
-    const fetchProductsByTag = async (tag) => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`https://manglan-clothing-backend.onrender.com/product/tag/${tag}`);
-        // Axios automatically parses JSON, so we just need to access the data property
-        setProducts(response.data);
-      } catch (err) {
-        console.error("Error fetching products by tag:", err.response?.data?.message || err.message);
-        setError(err.response?.data?.message || err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-     
-    fetchProductsByTag("summer");
-  }, []);
+    fetchProductsByTag("summer", page);
+  }, [page]);
   
   return (
     <>
       <div className="w-full h-auto pb-10 flex flex-col justify-center items-center">
         <div className="max-w-[2000px] w-full h-auto mx-2">
             <div className="grid grid-cols-1 px-6 pt-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-10 gap-x-16 place-items-center">
-              {loading ? (
-                // Show loading cards while data is being fetched
+              {loading && page === 1 ? (
+                // Show loading cards for initial load
                 Array(4).fill(0).map((_, index) => (
                   <ProductLoadingCard key={`loading-${index}`} />
                 ))
@@ -84,10 +121,36 @@ const Man = () => {
                   <p>Error loading products: {error}</p>
                 </div>
               ) : (
-                // Show actual products once loaded
-                products.slice(0,8).map((item, index) => (
-                  <ShopingCard key={index} item={item} index={index} />
-                ))
+                // Show actual products
+                products.map((item, index) => {
+                  // Apply ref to the last product element for infinite scroll
+                  if (products.length === index + 1) {
+                    return (
+                      <div key={index} ref={lastProductElementRef}>
+                        <ShopingCard item={item} index={index} />
+                      </div>
+                    );
+                  }
+                  return <ShopingCard key={index} item={item} index={index} />;
+                })
+              )}
+              
+              {/* Loading indicator at the bottom when loading more items */}
+              {loadingMore && (
+                <div className="col-span-full p-4 flex justify-center">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 rounded-full bg-gray-600 animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                    <div className="w-4 h-4 rounded-full bg-gray-600 animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                    <div className="w-4 h-4 rounded-full bg-gray-600 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  </div>
+                </div>
+              )}
+              
+              {/* Message when all products are loaded */}
+              {!hasMore && products.length > 0 && (
+                <div className="col-span-full py-4 text-center text-gray-500">
+                  <p>No more products to load</p>
+                </div>
               )}
             </div>
         </div>
