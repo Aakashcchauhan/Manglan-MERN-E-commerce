@@ -97,7 +97,7 @@ export default function Collection() {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
           centerMode: true,
           centerPadding: "0px",
