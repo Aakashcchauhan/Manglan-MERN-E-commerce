@@ -81,7 +81,7 @@ export default function Collection() {
       {
         breakpoint: 1026,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 3,
           slidesToScroll: 1,
           initialSlide: 1,
         },
