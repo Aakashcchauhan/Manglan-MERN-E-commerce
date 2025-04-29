@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrowBigRightDash } from "lucide-react";
-
+import { useNavigate } from 'react-router-dom';
 // Default banner images
 const BannerImage = [
   { 
@@ -15,6 +15,7 @@ const BannerImage = [
 ];
 
 const Banner = ({ images }) => {
+  const navigate = useNavigate();
   // Check if images is properly defined and has required elements
   if (!images || !Array.isArray(images) || images.length < 3) {
     console.error("Banner component requires an array of at least 3 images");
@@ -40,7 +41,7 @@ const Banner = ({ images }) => {
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="relative group">
-              <button className="w-40 h-12 bg-white flex justify-center items-center cursor-pointer border border-gray-800 px-4">
+              <button   onClick={() => navigate('/shopcategory/men')} className="w-40 h-12 bg-white flex justify-center items-center cursor-pointer border border-gray-800 px-4">
                 View More
                 <ArrowBigRightDash size={25} className="ml-2 transition-transform duration-300 group-hover:translate-x-2" />
               </button>
@@ -57,7 +58,7 @@ const Banner = ({ images }) => {
             />
             <div className="absolute inset-0 flex justify-center items-center">
               <div className="relative group">
-                <button className="w-40 h-12 bg-white flex justify-center items-center cursor-pointer border border-gray-800 px-4">
+                <button   onClick={() => navigate('/shopcategory/women')} className="w-40 h-12 bg-white flex justify-center items-center cursor-pointer border border-gray-800 px-4">
                   View More
                   <ArrowBigRightDash size={25} className="ml-2 transition-transform duration-300 group-hover:translate-x-2" />
                 </button>
@@ -74,7 +75,7 @@ const Banner = ({ images }) => {
             />
             <div className="absolute inset-0 flex justify-center items-center">
               <div className="relative group">
-                <button className="w-40 h-12 bg-white flex justify-center items-center cursor-pointer border border-gray-800 px-4">
+                <button onClick={() => navigate('/shopcategory/kid')} className="w-40 h-12 bg-white flex justify-center items-center cursor-pointer border border-gray-800 px-4">
                   View More
                   <ArrowBigRightDash size={25} className="ml-2 transition-transform duration-300 group-hover:translate-x-2" />
                 </button>
