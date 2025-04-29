@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import banner1 from "../../assets/Banner2.jpg";
 import banner2 from "../../assets/banner1.jpg";
-// This is just a demo component - in a real implementation you would import your actual images
-const HeroSection = () => {
+const navigate = useNavigate();
 
-  // // For demo purposes, using placeholder images
+const HeroSection = () => {
+const navigate = useNavigate();
+
     const images = [banner1, banner2];
   
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -65,7 +66,7 @@ const HeroSection = () => {
             
             {/* Content Overlay - Add your hero text here */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
-              <button 
+              <button    onClick={() => navigate('/shopcategory/men')}
                 className="bg-white text-gray-900 px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition duration-300"
               >
                 Shop Now
