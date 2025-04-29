@@ -1,12 +1,13 @@
 import React from "react";
 import { ArrowBigRightDash } from "lucide-react";
 
-const Banner = ({ images , BannerImage }) => {
+const Banner = ({ images }) => {
   // Check if images is properly defined and has required elements
   if (!images || !Array.isArray(images) || images.length < 3) {
     console.error("Banner component requires an array of at least 3 images");
     return <div className="w-full p-4">Banner images not available</div>;
   }
+
   return (
     <div className="w-full flex flex-col gap-4 p-4">
       {/* Container for all three images */}
@@ -14,7 +15,7 @@ const Banner = ({ images , BannerImage }) => {
         {/* Top banner */}
         <div className="w-full h-96 relative overflow-hidden bg-gray-100">
           <img 
-            src={images[0].url || BannerImage[0].image}
+            src={images[0].url || images[0].image}
             alt="Main Banner" 
             className="w-full h-full object-cover"
           />
@@ -31,7 +32,7 @@ const Banner = ({ images , BannerImage }) => {
         <div className="w-full flex flex-col md:flex-row gap-4">
           <div className="w-full md:w-1/2 h-64 relative overflow-hidden bg-gray-100">
             <img 
-              src={images[1].url || BannerImage[1].image}
+              src={images[1].url || images[1].image}
               alt="Left Image" 
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
             />
@@ -49,7 +50,7 @@ const Banner = ({ images , BannerImage }) => {
           {/* Right image */}
           <div className="w-full md:w-1/2 h-64 relative overflow-hidden bg-gray-100">
             <img 
-              src={images[2].url || BannerImage[2].image}
+              src={images[2].url || images[2].image}
               alt="Right Image" 
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
             />
@@ -68,4 +69,5 @@ const Banner = ({ images , BannerImage }) => {
     </div>
   );
 };
+
 export default Banner;
