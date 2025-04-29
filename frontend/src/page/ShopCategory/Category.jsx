@@ -48,17 +48,7 @@ const ProductLoadingCard = () => {
 };
 
 
-const bannerimages = [
-{ 
-  image : "https://image.hm.com/content/dam/global_campaigns/season_01/men/start-page-assets/w17/MS21LH10-16x9-Startpage-Teaser-1-w17.jpg?imwidth=1660"
-},
-{
-  image : "https://image.hm.com/content/dam/global_campaigns/season_01/women/startpage-assets/wk17/WS21K-16x9-splash-women-startpage-wk17.jpg?imwidth=1920"
-},
-{
-  image: "https://image.hm.com/content/dam/global_campaigns/season_01/kids/start-page-assets/w-17/4081B-16x9-NS-kids-start-page-prio-week-17.jpg?imwidth=1660"
-}
-]
+
 
 const menImages = [
   {
@@ -214,7 +204,7 @@ const CategoryPage = ({ category, title, images }) => {
   return (
     <>
       <Navbar />
-     <Banner images={bannerimages} />
+     <Banner images={image} />
       <Heading heading={`${title} Category`} paragraph={"Fashion '25"} />
       <div className="w-full h-auto pb-10 flex flex-col justify-center items-center">
         <div className="max-w-[1500px] w-full h-auto">
