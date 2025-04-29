@@ -204,7 +204,7 @@ const CategoryPage = ({ category, title, images }) => {
   return (
     <>
       <Navbar />
-     <Banner images={image} />
+     <Banner images={images} />
       <Heading heading={`${title} Category`} paragraph={"Fashion '25"} />
       <div className="w-full h-auto pb-10 flex flex-col justify-center items-center">
         <div className="max-w-[1500px] w-full h-auto">
