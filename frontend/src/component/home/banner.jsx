@@ -1,12 +1,6 @@
 import React from "react";
 import { ArrowBigRightDash } from "lucide-react";
 
-const Banner = ({ images }) => {
-  // Check if images is properly defined and has required elements
-  if (!images || !Array.isArray(images) || images.length < 3) {
-    console.error("Banner component requires an array of at least 3 images");
-    return <div className="w-full p-4">Banner images not available</div>;
-  }
 const BannerImage = [
 { 
   image : "https://image.hm.com/content/dam/global_campaigns/season_01/men/start-page-assets/w17/MS21LH10-16x9-Startpage-Teaser-1-w17.jpg?imwidth=1660"
@@ -18,6 +12,12 @@ const BannerImage = [
   image: "https://image.hm.com/content/dam/global_campaigns/season_01/kids/start-page-assets/w-17/4081B-16x9-NS-kids-start-page-prio-week-17.jpg?imwidth=1660"
 }
 ]
+const Banner = ({ images }) => {
+  // Check if images is properly defined and has required elements
+  if (!images || !Array.isArray(images) || images.length < 3) {
+    console.error("Banner component requires an array of at least 3 images");
+    return <div className="w-full p-4">Banner images not available</div>;
+  }
   return (
     <div className="w-full flex flex-col gap-4 p-4">
       {/* Container for all three images */}
