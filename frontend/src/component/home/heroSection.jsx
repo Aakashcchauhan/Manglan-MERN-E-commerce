@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import banner1 from "../../assets/Banner2.jpg";
 import banner2 from "../../assets/banner1.jpg";
-const navigate = useNavigate();
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
 const navigate = useNavigate();
