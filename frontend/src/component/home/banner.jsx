@@ -36,7 +36,7 @@ const Banner = ({ images }) => {
           <img 
             src={getImageSrc(0)}
             alt="Main Banner" 
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="relative group">
@@ -53,7 +53,7 @@ const Banner = ({ images }) => {
             <img 
               src={getImageSrc(1)}
               alt="Left Image" 
-              className="w-full h-full object-contain hover:scale-105 transition-transform duration-300" 
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
             />
             <div className="absolute inset-0 flex justify-center items-center">
               <div className="relative group">
@@ -70,7 +70,7 @@ const Banner = ({ images }) => {
             <img 
               src={getImageSrc(2)}
               alt="Right Image" 
-              className="w-full h-full object-contain hover:scale-105 transition-transform duration-300" 
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
             />
             <div className="absolute inset-0 flex justify-center items-center">
               <div className="relative group">
