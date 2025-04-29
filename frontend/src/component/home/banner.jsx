@@ -69,4 +69,4 @@ const Banner = ({ images }) => {
     </div>
   );
 };
-export default BannerExample;
+export default Banner;
