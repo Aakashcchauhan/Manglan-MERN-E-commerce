@@ -15,7 +15,7 @@ const Banner = ({ images }) => {
         {/* Top banner */}
         <div className="w-full h-[50%] relative overflow-hidden bg-gray-100">
           <img 
-            src={images[0].url}
+            src={images[0].url || "https://image.hm.com/content/dam/global_campaigns/season_01/men/start-page-assets/w17/MS21LH10-16x9-Startpage-Teaser-1-w17.jpg?imwidth=1660"}
             alt="Main Banner" 
             className="w-full h-full object-cover"
           />
@@ -32,7 +32,7 @@ const Banner = ({ images }) => {
         <div className="w-full flex flex-col md:flex-row gap-4">
           <div className="w-full md:w-1/2 h-98 relative overflow-hidden bg-gray-100">
             <img 
-              src={images[1].url}
+              src={images[1].url || "https://image.hm.com/content/dam/global_campaigns/season_01/women/startpage-assets/wk17/WS21K-16x9-splash-women-startpage-wk17.jpg?imwidth=1920"}
               alt="Left Image" 
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
             />
@@ -50,7 +50,7 @@ const Banner = ({ images }) => {
           {/* Right image */}
           <div className="w-full md:w-1/2 h-98 relative overflow-hidden bg-gray-100">
             <img 
-              src={images[2].url}
+              src={images[2].url || "https://image.hm.com/content/dam/global_campaigns/season_01/kids/start-page-assets/w-17/4081B-16x9-NS-kids-start-page-prio-week-17.jpg?imwidth=1660"}
               alt="Right Image" 
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
             />
