@@ -1,6 +1,6 @@
-# 🛍️ Mangalan - A Modern E-Commerce Solution
+# 🛍️ Manglan - A Modern E-Commerce Solution
 
-Mangalan is a fully responsive and production-ready e-commerce website built using modern web development technologies. This project demonstrates a secure, scalable, and modular approach to building a complete full-stack web application.
+Manglan is a fully responsive and production-ready e-commerce website built using modern web development technologies. This project demonstrates a secure, scalable, and modular approach to building a complete full-stack web application.
 
 ## 🚀 Live Demo
 [Live Site URL](#)  
